@@ -38,6 +38,13 @@ data_xl <- read_xlsx("1_raw_data/workshop_data.xlsx")
 
 .Rdata files store the structure of your variables. Once you finish with data wrangling, it is useful to save your dataset to an .Rdata file so that it maintains any edits (e.g., class of factor, re-leveling etc). Downside: you can only open it in R.
 
+```{r, eval=F, echo=T}
+save(data, file = "name_of_file.Rdata")
+load("name_of_file.Rdata") 
+```
+
+When you load this dataset back into r, it will be titled `data` in the environment 
+
 ## Data types
 
 [Good Overview](https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures)\
@@ -50,15 +57,6 @@ data_xl <- read_xlsx("1_raw_data/workshop_data.xlsx")
 
 ## Inspect data types
 
-```{r, eval=F, echo=T}
-save(data, file = "name_of_file.Rdata")
-load("name_of_file.Rdata") 
-```
-
-When you load this data into r, it will be titled politeness
-
-## Convert data types
-
 After you import data, it is necessary to check the structure of the data. <br>
 
 ```{r, echo=T, eval=F}
@@ -69,6 +67,9 @@ glimpse(sat_dat)
 
 class(sat_dat$variable_name)
 ```
+
+## Convert data types
+If you have a categorical variable that is classified as numeric, it is **necessary** you change this to a factor. If you leave it as numeric, R will assume it is a continuous variable. In other words, that category one is 1 unit smaller than category two, which of course is nonsense for nominal data. This is a critical step and will save you issues with plotting and analyses down the road!
 
 **Nominal variables** (Factors): categories with no particular order (sex, gender, hair color, etc.) <br />
 
@@ -82,7 +83,7 @@ data$sex <- factor(data$sex, labels = c("males", "females"))
 data$education <- ordered(data$education)
 ```
 
--   Likert items (e.g. ranging from 1"completely disagree" to 5 "completely agree") are **ordinal** and technically should be treated as such when they are a response variable. It makes our life easier to treat them as metric when they are predictors. <br />
+-   Likert items (e.g. ranging from 1 "completely disagree" to 5 "completely agree") are sometimes a tricky data type. Technically they are *ordinal* and should be treated as such when they are a **response variable**. However, we often treat them as *continuous* when they are **predictors**. <br />
 
 **Metric scale level (aka numerical)**: distance relation between the values (income, IQ,SAT, age):<br /> - **Ratio scale**: natural 0 point (income, body height, etc.)<br /> - **Interval scale**: no natural 0 point (temperature Celsius, year, etc.)
 
@@ -102,5 +103,5 @@ You can also index multiple columns using `c()` stands for concatenate (or combi
 
 ```{r, echo=TRUE, eval=TRUE}
 vec1 <- c(6, 77, 2333, 4, 8)
-vec1[, c(2,3)]
+vec1[c(2,3)]
 ```
