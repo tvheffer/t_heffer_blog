@@ -2,14 +2,14 @@ project:
   type: website
 
 website:
-  title: "t_heffer_blog"
+  title: "[R] for research"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/tvheffer
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/heffer-taylor
 format:
   html:
     theme: cosmo
@@ -17,3 +17,6 @@ format:
 
 editor: visual
 
+comments:
+  giscus:
+    repo: tvheffer/t_heffer_blog

@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tristan O’Malley">
-<meta name="dcterms.date" content="2023-06-27">
+<meta name="dcterms.date" content="2023-06-30">
 
-<title>[R] for research - Welcome To My Blog</title>
+<title>[R] for research - Preparing data in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -66,7 +99,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -108,9 +141,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Welcome To My Blog</h1>
+      <h1 class="title">Preparing data in R</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Data Wrangling</div>
               </div>
                   </div>
   </div>
@@ -118,17 +152,11 @@ ul.task-list li input[type="checkbox"] {
   
   <div class="quarto-title-meta">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Tristan O’Malley </p>
-            </div>
-    </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 27, 2023</p>
+        <p class="date">June 30, 2023</p>
       </div>
     </div>
     
@@ -139,18 +167,92 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#read-in-data-to-r" id="toc-read-in-data-to-r" class="nav-link active" data-scroll-target="#read-in-data-to-r">Read in data to R</a></li>
+  <li><a href="#data-types" id="toc-data-types" class="nav-link" data-scroll-target="#data-types">Data types</a></li>
+  <li><a href="#re-level-a-variabl" id="toc-re-level-a-variabl" class="nav-link" data-scroll-target="#re-level-a-variabl">Re-level a variabl</a></li>
+  <li><a href="#indexing-extracting-elements-from-a-dataset" id="toc-indexing-extracting-elements-from-a-dataset" class="nav-link" data-scroll-target="#indexing-extracting-elements-from-a-dataset">Indexing (extracting elements from a dataset)</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<p>This is the first post in a Quarto blog. Welcome!</p>
-<p><img src="thumbnail.jpg" class="img-fluid"></p>
-<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
+<p>This post covers how to read in data, change data types, and index variables in a dataframe</p>
+<section id="read-in-data-to-r" class="level2">
+<h2 class="anchored" data-anchor-id="read-in-data-to-r">Read in data to R</h2>
+<p><strong>CSV File:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sat_dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"1_raw_data/workshop_data.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>SPSS File:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data_spss <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"1_raw_data/workshop_data.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Excel File:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data_xl <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"1_raw_data/workshop_data.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>R data:</strong></p>
+<p>.Rdata files store the structure of your variables. Once you finish with data wrangling, it is useful to save your dataset to an .Rdata file so that it maintains any edits (e.g., class of factor, re-leveling etc). Downside: you can only open it in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span> <span class="st">"name_of_file.Rdata"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"name_of_file.Rdata"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When you load this data into r, it will be titled politeness</p>
+</section>
+<section id="data-types" class="level2">
+<h2 class="anchored" data-anchor-id="data-types">Data types</h2>
+<p><a href="https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures">Good Overview</a><br>
+<strong>Data frame</strong>: rows are the unit of observations, columns are the variables.<br>
+<strong>Integer:</strong> <code>as.integer(44.1)</code> provides rounded values (44)<br>
+<strong>Numeric:</strong> <code>as.numeric(44.1)</code> saves decimals (44.1)<br>
+<strong>Matrix:</strong> can only store data that is all the same type<br>
+<strong>Characters:</strong> string- can use single or double quotes <strong>Factor:</strong> used to classify categorical data ## Convert data types</p>
+<p>After you import data, it is necessary to check the structure of the data. <br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sat_dat)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sat_dat)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sat_dat<span class="sc">$</span>variable_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Nominal variables</strong> (Factors): categories with no particular order (sex, gender, hair color, etc.) <br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>sex, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"males"</span>, <span class="st">"females"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Ordinal variables:</strong> categories with order relations (grades, social status, etc.) <br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>education <span class="ot">&lt;-</span> <span class="fu">ordered</span>(data<span class="sc">$</span>education)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Likert items (e.g.&nbsp;ranging from 1”completely disagree” to 5 “completely agree”) are <strong>ordinal</strong> and technically should be treated as such when they are a response variable. It makes our life easier to treat them as metric when they are predictors. <br></li>
+</ul>
+<p><strong>Metric scale level (aka numerical)</strong>: distance relation between the values (income, IQ,SAT, age):<br> - <strong>Ratio scale</strong>: natural 0 point (income, body height, etc.)<br> - <strong>Interval scale</strong>: no natural 0 point (temperature Celsius, year, etc.)</p>
+</section>
+<section id="re-level-a-variabl" class="level2">
+<h2 class="anchored" data-anchor-id="re-level-a-variabl">Re-level a variabl</h2>
+<p>When you create a factor, the baseline category is <em>alphabetical</em> order, usually you want the control group as a baseline category</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="fu">relevel</span>(data<span class="sc">$</span>group, <span class="at">ref =</span> <span class="st">"control"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="indexing-extracting-elements-from-a-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="indexing-extracting-elements-from-a-dataset">Indexing (extracting elements from a dataset)</h2>
+<p>When indexing, the order is: [row,column] <br> <code>dat_data[1,3]</code> extract the value in row 1, column 3 <br> <code>dat_data[5,]</code> extract all values in row 5 <br></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
