@@ -2,8 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/data_import/dummy_blog.html",
-      "/posts/post-with-code/index.html",
+      "/posts/data_import/data_preparing.html",
       "/posts/welcome/index.html"
     ]
   }

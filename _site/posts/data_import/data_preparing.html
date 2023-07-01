@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Harlow Malloc">
 <meta name="dcterms.date" content="2023-06-30">
 
-<title>[R] for research - Post With Code</title>
+<title>[R] for research - Preparing data in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -100,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -142,11 +141,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Post With Code</h1>
+      <h1 class="title">Preparing data in R</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
-                <div class="quarto-category">code</div>
-                <div class="quarto-category">analysis</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Data Wrangling</div>
               </div>
                   </div>
   </div>
@@ -154,12 +152,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   <div class="quarto-title-meta">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Harlow Malloc </p>
-            </div>
-    </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
@@ -175,22 +167,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#read-in-data-to-r" id="toc-read-in-data-to-r" class="nav-link active" data-scroll-target="#read-in-data-to-r">Read in data to R</a></li>
+  <li><a href="#data-types" id="toc-data-types" class="nav-link" data-scroll-target="#data-types">Data types</a></li>
+  <li><a href="#inspect-data-types" id="toc-inspect-data-types" class="nav-link" data-scroll-target="#inspect-data-types">Inspect data types</a></li>
+  <li><a href="#convert-data-types" id="toc-convert-data-types" class="nav-link" data-scroll-target="#convert-data-types">Convert data types</a></li>
+  <li><a href="#re-leveling-a-variable" id="toc-re-leveling-a-variable" class="nav-link" data-scroll-target="#re-leveling-a-variable">Re-leveling a variable</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<p>This is a post with executable code.</p>
+<p>This post covers how to read in data and converting data types</p>
+<section id="read-in-data-to-r" class="level2">
+<h2 class="anchored" data-anchor-id="read-in-data-to-r">Read in data to R</h2>
+<p><strong>CSV File:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sat_dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"1_raw_data/workshop_data.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>SPSS File:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data_spss <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">"1_raw_data/workshop_data.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Excel File:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data_xl <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"1_raw_data/workshop_data.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>R data:</strong></p>
+<p>.Rdata files store the structure of your variables. Once you finish with data wrangling, it is useful to save your dataset to an .Rdata file so that it maintains any edits (e.g., class of factor, re-leveling etc). Downside: you can only open it in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(data, <span class="at">file =</span> <span class="st">"name_of_file.Rdata"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"name_of_file.Rdata"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When you load this dataset back into r, it will be titled <code>data</code> in the environment</p>
+</section>
+<section id="data-types" class="level2">
+<h2 class="anchored" data-anchor-id="data-types">Data types</h2>
+<p><a href="https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures">Good Overview</a><br>
+<strong>Data frame</strong>: rows are the unit of observations, columns are the variables.<br>
+<strong>Integer:</strong> <code>as.integer(44.1)</code> provides rounded values (44)<br>
+<strong>Numeric:</strong> <code>as.numeric(44.1)</code> saves decimals (44.1)<br>
+<strong>Matrix:</strong> can only store data that is all the same type<br>
+<strong>Characters:</strong> string- can use single or double quotes<br>
+<strong>Factor:</strong> used to classify categorical data</p>
+</section>
+<section id="inspect-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="inspect-data-types">Inspect data types</h2>
+<p>After you import data, it is necessary to check the structure of the data. <br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sat_dat)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sat_dat)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sat_dat<span class="sc">$</span>variable_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="convert-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="convert-data-types">Convert data types</h2>
+<p>If you have a categorical variable that is classified as numeric, it is <strong>necessary</strong> you change this to a factor. If you leave it as numeric, R will assume it is a continuous variable. In other words, that category one is 1 unit smaller than category two, which of course is nonsense for nominal data. This is a critical step and will save you issues with plotting and analyses down the road!</p>
+<p><strong>Nominal variables</strong> (Factors): categories with no particular order (sex, gender, hair color, etc.) <br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>sex, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"males"</span>, <span class="st">"females"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Ordinal variables:</strong> categories with order relations (grades, social status, etc.) <br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>education <span class="ot">&lt;-</span> <span class="fu">ordered</span>(data<span class="sc">$</span>education)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Likert items (e.g.&nbsp;ranging from 1 “completely disagree” to 5 “completely agree”) are sometimes a tricky data type. Technically they are <em>ordinal</em> and should be treated as such when they are a <strong>response variable</strong>. However, we often treat them as <em>continuous</em> when they are <strong>predictors</strong>. <br></li>
+</ul>
+<p><strong>Metric scale level (aka numerical)</strong>: distance relation between the values (income, IQ,SAT, age):<br> - <strong>Ratio scale</strong>: natural 0 point (income, body height, etc.)<br> - <strong>Interval scale</strong>: no natural 0 point (temperature Celsius, year, etc.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>anxiety <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data<span class="sc">$</span>anxiety)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="re-leveling-a-variable" class="level2">
+<h2 class="anchored" data-anchor-id="re-leveling-a-variable">Re-leveling a variable</h2>
+<p>When you create a factor, the baseline category is <em>alphabetical</em> order, usually you want the control group as a baseline category. To change the levels, use the following command.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="fu">relevel</span>(data<span class="sc">$</span>group, <span class="at">ref =</span> <span class="st">"control"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
