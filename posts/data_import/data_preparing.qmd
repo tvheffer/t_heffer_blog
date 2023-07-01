@@ -10,7 +10,7 @@ editor_options:
 toc: true
 ---
 
-This post covers how to read in data, change data types, and index variables in a dataframe
+This post covers how to read in data and converting data types
 
 ## Read in data to R
 
@@ -87,6 +87,10 @@ data$education <- ordered(data$education)
 
 **Metric scale level (aka numerical)**: distance relation between the values (income, IQ,SAT, age):<br /> - **Ratio scale**: natural 0 point (income, body height, etc.)<br /> - **Interval scale**: no natural 0 point (temperature Celsius, year, etc.)
 
+```{r, echo=T, eval=F}
+data$anxiety <- as.numeric(data$anxiety)
+```
+
 ## Re-leveling a variable
 
 When you create a factor, the baseline category is *alphabetical* order, usually you want the control group as a baseline category. To change the levels, use the following command.
@@ -95,13 +99,3 @@ When you create a factor, the baseline category is *alphabetical* order, usually
 data$group <- relevel(data$group, ref = "control")
 ```
 
-## Indexing (extracting elements from a dataset)
-
-When indexing, the order is: \[row,column\] <br /> `dat_data[1,3]` extract the value in row 1, column 3 <br /> `dat_data[5,]` extract all values in row 5 <br />
-
-You can also index multiple columns using `c()` stands for concatenate (or combine)
-
-```{r, echo=TRUE, eval=TRUE}
-vec1 <- c(6, 77, 2333, 4, 8)
-vec1[c(2,3)]
-```
